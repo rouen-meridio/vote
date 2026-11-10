@@ -447,7 +447,7 @@ const plural = (n, w) => n + ' ' + w + (n > 1 ? 's' : '');
 function toast(msg){ document.querySelectorAll('.toast').forEach(t => t.remove()); const t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = msg; document.body.append(t); setTimeout(() => t.remove(), 3200); }
 /* Version GitHub Pages : collez ici l'URL de l'application Web Apps Script (elle se termine par /exec).
    Dans Apps Script ou Google Sites, cette ligne est ignorée. */
-const API_URL = '';
+const API_URL = 'https://script.google.com/macros/s/AKfycbz2TIpTda4o0i0VT6rg_yKjf5YhWXV2PZJM6eojfp3kkxezANRQDwxyEaLD5uT4SNPndQ/exec';
 const GAS = typeof google !== 'undefined' && google.script && google.script.run;
 const run = (fn, ...a) => GAS ? new Promise((ok, ko) => {
   const r = google.script.run.withSuccessHandler(ok).withFailureHandler(ko);
