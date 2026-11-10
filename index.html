@@ -752,9 +752,10 @@ function resultHtml(){
     if (!isP()) return '<section class="blank" aria-label="Écran vide"><span data-until hidden></span></section>';
     return ecran('Résultats du scrutin', `<div class="lcp wait"><div class="lcp-obj">Scrutin n° ${esc(s.num)} clos</div><div class="lcp-t">${esc(s.objet || '')}</div><span data-until hidden></span><p class="wmsg">Résultat en cours, merci de patienter…</p><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>`, seancePied());
   }
+  if (!s && !isP() && E.dernier) { const dn = E.dernier; return ecran('Scrutin clos', `<div class="lcp wait"><div class="lcp-obj">Scrutin n° ${esc(dn.num)}</div><div class="lcp-t">${esc(dn.objet || '')}</div><p class="wmsg">Le scrutin est clos.<br>Les résultats vont être annoncés…</p></div>`, seancePied()); }
   if (!s && seanceActive()) return ecran('Prochaine séance', seanceEcran(seanceActive()));
   return s ? lcpCard(s.res, s, false, seancePied()) + `<p class="when">Scrutin clos le ${esc(hm(s.closAt))}</p>` + (isP() ? partisHtml(s.partis, false) : '')
-    : ecran('Aucun scrutin en cours', `<div class="lcp idle"><span class="idle-logo">${LOGO}</span><p class="wmsg">${isD() ? 'Le bulletin de vote apparaîtra ici dès que la Présidence ouvrira le scrutin.' : 'Les résultats s’afficheront ici.'}</p></div>`);
+    : ecran('Aucun scrutin en cours', `<div class="lcp idle"><span class="idle-logo">${LOGO}</span><p class="wmsg">${isD() ? 'Le bulletin de vote apparaîtra ici dès que la Présidence ouvrira le scrutin.' : 'Le vote apparaîtra ici dès que la Présidence ouvrira le scrutin.'}</p></div>`);
 }
 function renderMain(){
   if (!E) return;
