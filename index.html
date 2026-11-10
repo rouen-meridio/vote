@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vote Merídio Rouen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap">
+<style>
+html,body{margin:0;padding:0}
+:root{
+  --paper:#f3f5f9; --surface:#ffffff; --cream:#fffbea; --cream-line:#efe6bf; --ink:#14274e; --muted:#5b6680; --line:#dfe3ea;
+  --navy:#1b3a6b; --blue:#1d4f9a; --blue-soft:#e3ecfa; --red:#d6001c; --ko:#b3121f;
+  --v-pour:#3f6fbf; --v-contre:#c62a37;
+  --shadow:0 1px 2px rgba(20,39,78,.06),0 8px 24px rgba(20,39,78,.08);
+  --f-ui:"Lato",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0b1426; --surface:#111d35; --cream:#1c2238; --cream-line:#2c3550; --ink:#e7ecf6; --muted:#9ba7c0; --line:#263553;
+  --navy:#0f2347; --blue:#86aef0; --blue-soft:#1a3058; --red:#ff5a6e; --ko:#ff7d88; --v-pour:#86aef0; --v-contre:#ff6b78;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0b1426; --surface:#111d35; --cream:#1c2238; --cream-line:#2c3550; --ink:#e7ecf6; --muted:#9ba7c0; --line:#263553;
+  --navy:#0f2347; --blue:#86aef0; --blue-soft:#1a3058; --red:#ff5a6e; --ko:#ff7d88; --v-pour:#86aef0; --v-contre:#ff6b78;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.3); color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100dvh;display:flex;flex-direction:column}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4,.ec-head h2,.brand b,.lcp-maj span,.lcp-g2 span,.ac-top h2{font-weight:700}
+button{cursor:pointer}
+button:disabled{cursor:default;opacity:.5}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+.tbar{background:var(--navy);color:#fff;display:flex;align-items:center;gap:12px;padding:12px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));position:relative}
+.tbar::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:3px;background:linear-gradient(90deg,#1d4f9a 0 33.33%,#fff 33.33% 66.66%,#d6001c 66.66% 100%)}
+.brand{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.brand .logo{width:40px;height:32px;border-radius:4px;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;flex:none}
+.brand b{display:block;font-size:20px;font-weight:700;line-height:1.1}
+.brand small{display:block;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;opacity:.75}
+.lbtn{height:40px;border-radius:8px;border:1px solid rgba(255,255,255,.35);background:transparent;color:#fff;padding:0 14px;font-weight:600;display:inline-flex;align-items:center;gap:8px;flex:none}
+.lbtn:hover{background:rgba(255,255,255,.1)}
+.btn{height:40px;border-radius:8px;border:1px solid var(--line);background:var(--surface);padding:0 14px;font-weight:600;white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
+.btn:hover:not(:disabled){border-color:var(--muted)}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}
+.btn.ko{background:var(--ko);border-color:var(--ko);color:#fff}
+
+/* Barre Présidence */
+.prez{background:var(--cream);border-bottom:1px solid var(--cream-line);padding:12px max(16px,env(safe-area-inset-right,0px)) 12px max(16px,env(safe-area-inset-left,0px));display:flex;align-items:center;gap:8px 10px;flex-wrap:wrap}
+.pz-t{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-right:4px}
+.prez input{height:40px;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:0 12px;font-size:15px}
+.prez input#scObj{flex:1 1 260px;min-width:0}
+.prez input.num{width:96px}
+.prez label.sl{font-size:13px;color:var(--muted);display:inline-flex;align-items:center;gap:6px}
+.state{font-size:13px;font-weight:700;border-radius:6px;padding:4px 10px;background:var(--red);color:#fff;white-space:nowrap}
+.tly{font-size:14.5px;font-variant-numeric:tabular-nums;flex:1;min-width:0}
+.tly i{font-style:normal;font-weight:700}
+.tly .p{color:var(--v-pour)}.tly .c{color:var(--v-contre)}.tly .a{color:var(--muted)}
+.muted{font-size:13.5px;color:var(--muted)}
+
+main{flex:1;width:100%;max-width:760px;margin:0 auto;padding:22px 16px 40px;display:flex;flex-direction:column;gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;box-shadow:var(--shadow)}
+.welcome{text-align:center;color:var(--muted);padding:40px 20px}
+.welcome h2{color:var(--ink);font-size:22px;margin:10px 0 6px}
+.welcome svg{color:var(--muted)}
+
+/* Bulletin */
+.ballot{border:2px solid var(--red);text-align:center;padding:26px 20px}
+.bl-k{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.bl-k i{width:9px;height:9px;border-radius:50%;background:var(--red);animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(214,0,28,.45)}70%{box-shadow:0 0 0 8px rgba(214,0,28,0)}100%{box-shadow:0 0 0 0 rgba(214,0,28,0)}}
+.ballot h2{font-size:24px;line-height:1.25;margin:8px 0 22px;text-wrap:balance}
+.vbs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.vb{height:76px;border-radius:10px;border:2px solid var(--vc);background:var(--surface);color:var(--vc);font-weight:700;font-size:19px;letter-spacing:.05em;text-transform:uppercase}
+.vb.pour{--vc:var(--v-pour)}.vb.contre{--vc:var(--v-contre)}.vb.abst{--vc:var(--muted)}
+
+@media (max-width:480px){.brand small .x{display:none}}
+.vb[aria-pressed="true"]{background:var(--vc);color:#fff}
+.vb[aria-pressed="true"]::before{content:"✓ "}
+.bl-n{margin:16px 0 0;font-size:14px;color:var(--muted)}
+.bl-n b{color:var(--ink)}
+@media (max-width:560px){.vbs{grid-template-columns:minmax(0,1fr)}.vb{height:64px}.ballot h2{font-size:20px}}
+
+/* Résultat façon LCP */
+.lcp{background:#dfe4f4;color:#1f3b6f;padding:22px 16px 18px;text-align:center}
+.ecran{display:grid;grid-template-columns:118px minmax(0,1fr);background:#2c5d9f;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.ec-side{display:flex;flex-direction:column;align-items:center;gap:10px;padding:16px 8px;background:linear-gradient(180deg,#2c5d9f,#234c86);color:#fff}
+.ec-logo{display:flex;flex-direction:column;align-items:center;gap:2px}
+.ec-logo small{font-size:11px;line-height:1.25;text-align:center;font-weight:600;opacity:.92;margin-top:6px}
+.ec-tile{width:84px;height:84px;border-radius:14px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.18)}
+.ec-tile svg{width:66px;height:64px}
+.brand .logo.lg{background:#fff;width:40px;height:40px;border-radius:9px}
+.brand .logo.lg svg{width:32px;height:31px}
+.ec-clk{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em;line-height:1}
+.ec-main{display:flex;flex-direction:column;min-width:0;background:#dfe4f4}
+.ec-head{position:relative;background:#3a74c0;color:#fff;text-align:center;padding:12px 56px 14px}
+.ec-date{display:block;font-size:13px;opacity:.85}
+.ec-head h2{margin:2px 0 0;font-size:26px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;line-height:1.15}
+.ec-flag{position:absolute;top:14px;right:18px;display:flex;height:22px;border-radius:2px;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.35)}
+.ec-flag i{width:6px;display:block}.ec-flag i:nth-child(1){background:#1d4f9a}.ec-flag i:nth-child(2){background:#fff}.ec-flag i:nth-child(3){background:#d6001c}
+.lcp.wait{padding:40px 16px 48px}
+.lcp.idle{padding:34px 16px 40px}
+.lcp .idle-logo svg{width:110px;height:auto;margin:0 auto;opacity:.95}
+.lcp.idle .wmsg{margin:16px auto 0;font-size:17px;font-weight:500;color:#3d4b66;max-width:420px}
+.lcp.wait .wmsg{margin:18px 0 0;font-size:21px;font-weight:600;color:#1f3b6f}
+.lcp .dots{display:inline-flex;gap:6px;margin-top:14px}
+.dots i{display:block;width:9px;height:9px;border-radius:50%;background:#3a74c0;animation:dot 1.2s infinite ease-in-out}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,80%,100%{opacity:.25;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+@media (max-width:640px){
+  .ecran{grid-template-columns:minmax(0,1fr)}
+  .ec-side{flex-direction:row;justify-content:space-between;padding:8px 14px}
+  .ec-logo{flex-direction:row;gap:8px}
+  .ec-tile{width:40px;height:40px;border-radius:9px}
+  .ec-tile svg{width:32px;height:31px}
+  .ec-logo small{margin-top:0;text-align:left;font-size:11px}
+  .ec-clk{font-size:22px}
+  .ec-head{padding:10px 44px 12px}
+  .ec-head h2{font-size:17px}
+  .ec-flag{top:12px;right:12px;height:18px}
+}
+@media (prefers-reduced-motion:reduce){.dots i{animation:none;opacity:.7}}
+.lcp-obj{font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#c62a37}
+.lcp-t{font-size:16px;font-weight:600;color:#3d4b66;margin:2px auto 14px;max-width:520px;line-height:1.35}
+.lcp-g2{display:grid;grid-template-columns:minmax(0,1fr) 0 minmax(0,1fr);align-items:center}
+.lcp-g2>i{align-self:stretch;border-left:2px dashed #1f3b6f;opacity:.55}
+.lcp b{display:block;font-size:42px;font-weight:700;line-height:1.05;font-variant-numeric:tabular-nums}
+.lcp span{display:block;font-size:22px;font-weight:700;line-height:1.2}
+.lcp-maj{margin:8px 0 6px}
+.lcp-g2.big span{font-size:30px;text-transform:uppercase}
+.lcp .p{color:#3f6fbf}.lcp .c{color:#c62a37}
+.lcp-abs{font-size:15px;font-weight:600;color:#5b6680;margin-top:6px}
+.lcp svg{display:block;width:100%;max-width:440px;height:auto;margin:12px auto 0}
+.lcp-v{margin:14px auto 0;font-size:18px;font-weight:700;padding:10px 14px;border-radius:6px;color:#fff;max-width:420px}
+.lcp-v.ok{background:#3f6fbf}.lcp-v.ko{background:#c62a37}
+.lcp-leg{display:flex;justify-content:center;flex-wrap:wrap;gap:4px 14px;margin-top:10px}
+.lcp-leg span{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:500;line-height:1.4;color:#5b6680}
+.lcp-leg i{width:13px;height:8px;border-radius:2px;flex:none}
+.when{margin:8px 0 0;text-align:center;font-size:13px;color:var(--muted)}
+@media (max-width:560px){.lcp b{font-size:32px}.lcp span{font-size:17px}.lcp-g2.big span{font-size:22px}}
+
+.blank{background:#fff;min-height:72vh;border-radius:12px}
+
+/* Détail Présidence */
+details.det{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+details.det summary{cursor:pointer;padding:14px 18px;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+details.det summary::-webkit-details-marker{display:none}
+details.det summary small{font-weight:500;color:var(--muted);font-size:13px}
+.vlist{display:flex;flex-direction:column;gap:6px;padding:0 18px 18px}
+.vrow{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.vrow img{width:26px;height:26px;border-radius:50%;flex:none}
+.vrow .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vtag{font-size:12.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:5px;padding:2px 9px;color:#fff}
+.vtag.pour{background:#3f6fbf}.vtag.contre{background:#c62a37}.vtag.abst{background:var(--paper);color:var(--muted);border:1px solid var(--line)}
+
+/* Historique */
+.hist h3{margin:0 0 10px;font-size:16px}
+.scls{display:flex;flex-direction:column;gap:6px}
+.scl{width:100%;display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:2px 10px;border:1px solid var(--line);border-radius:8px;padding:9px 12px;background:var(--surface);text-align:left}
+.scl:hover{border-color:var(--muted)}
+.scl[aria-current="true"]{border-color:var(--blue);background:var(--blue-soft)}
+.scl .n{font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+.scl .o{font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scl .r{grid-column:2/4;font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.st{font-size:12px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;border-radius:5px;padding:2px 8px;white-space:nowrap}
+.st.ok{background:#def3e5;color:#1c7a3c}.st.ko{background:#fbe4e6;color:#b3121f}
+
+.foot{padding:10px 16px;background:var(--navy);color:rgba(255,255,255,.75);font-size:12.5px;text-align:center}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--ink);color:var(--surface);padding:10px 16px;border-radius:8px;font-size:14px;z-index:80;max-width:calc(100vw - 32px);text-align:center}
+.saving{opacity:.65;pointer-events:none}
+.warn{background:#fdf1d6;color:#14274e;border-left:4px solid #8a5a00;padding:8px 16px;font-size:13.5px}
+
+.veil{position:fixed;inset:0;z-index:60;background:rgba(10,20,40,.45);display:flex;align-items:center;justify-content:center;padding:16px}
+.lbox{width:100%;max-width:380px;background:var(--surface);border-radius:10px;border-top:4px solid var(--navy);box-shadow:var(--shadow);padding:22px;display:flex;flex-direction:column;gap:14px}
+.lbox h2{margin:0;font-size:22px}
+.lbox p{margin:-6px 0 0;font-size:13.5px;color:var(--muted)}
+.lbox label{font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600;display:block;margin-bottom:6px}
+.lbox input{width:100%;height:44px;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:0 12px;font-size:15px}
+.lbox .err{color:var(--ko);margin:0;font-size:14px}
+.frow{display:flex;gap:8px;justify-content:flex-end}
+@media (prefers-reduced-motion:reduce){.bl-k i{animation:none}}
+@media (hover:hover){.vb:hover:not(:disabled):not([aria-pressed="true"]){background:var(--blue-soft)}}
+.auth{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.auth{order:3}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:rgba(255,255,255,.9);max-width:240px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.chip b{font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.16);border-radius:4px;padding:2px 6px}
+@media (max-width:620px){.tbar{flex-wrap:wrap}.auth{width:100%;justify-content:flex-start}.lbtn{height:36px;padding:0 10px;font-size:14px}}
+.prez .end{margin-left:auto}
+.prez input.n{width:84px}
+.prez .cur{font-size:14.5px;font-weight:600;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:320px}
+.me{font-size:14px;color:var(--muted);margin:-10px 0 18px}
+.load{text-align:center;color:var(--muted);padding:60px 0}
+.wait{text-align:center;padding:34px 20px}
+.wait .big{font-size:56px;font-weight:700;line-height:1;color:var(--navy);font-variant-numeric:tabular-nums}
+.wait h2{margin:8px 0 4px;font-size:21px}
+.wait p{margin:0;color:var(--muted)}
+.wait .wmsg{margin-top:14px;font-size:20px;font-weight:600;color:var(--ink)}
+.login-cta{margin-top:16px}
+/* Scrutins préparés */
+.prep h3{margin:0 0 4px;font-size:17px}
+.prep>p{margin:0 0 12px;font-size:13.5px;color:var(--muted)}
+.plist{display:flex;flex-direction:column;gap:6px;margin-bottom:12px}
+.prow{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:8px;padding:8px 10px;flex-wrap:wrap}
+.prow .n{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.prow .o{flex:1 1 180px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prow .s{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.prow .btn{height:34px;padding:0 10px;font-size:13.5px}
+.prow.editing{border-color:var(--blue);background:var(--blue-soft)}
+.pform{display:flex;gap:8px;flex-wrap:wrap;align-items:center;border-top:1px dashed var(--line);padding-top:12px}
+.pform input{height:40px;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:0 10px;font-size:15px}
+.pform #pNum{width:84px}.pform #pObj{flex:1 1 220px;min-width:0}.pform #pSeats{width:84px}
+.pform label{font-size:12.5px;color:var(--muted)}
+.iconb{border:1px solid var(--line);background:var(--surface);border-radius:8px;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;color:var(--ko)}
+.iconb.armed{width:auto;padding:0 10px;background:var(--ko);border-color:var(--ko);color:#fff;font-size:12.5px;font-weight:700}
+/* Historique */
+.sclw{display:flex;gap:6px;align-items:stretch}
+.sclw .scl{flex:1;min-width:0}
+.sdel{flex:none;width:44px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ko);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.sdel.armed{width:auto;padding:0 10px;background:var(--ko);border-color:var(--ko);color:#fff}
+.st.wt{background:var(--blue-soft);color:var(--blue)}
+/* Dialogues */
+.lbox.wide{max-width:520px;max-height:calc(100dvh - 32px);overflow:auto}
+.tabs{display:flex;gap:6px}
+.tabs button{flex:1;height:38px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font-weight:600}
+.tabs button[aria-selected="true"]{background:var(--navy);border-color:var(--navy);color:#fff}
+.clist{display:flex;flex-direction:column;gap:6px;max-height:260px;overflow:auto}
+.crow{display:flex;align-items:center;gap:6px 8px;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font-size:14.5px;flex-wrap:wrap}
+.crow .id{flex:1 1 140px;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.crow .id small{display:block;color:var(--muted);font-size:12px}
+.crow .tag{color:var(--muted);font-size:12px}
+.crow .lk{border:0;background:none;color:var(--blue);font-size:13px;font-weight:600;padding:4px 4px}
+.crow .lk.del{color:var(--ko)}
+.crow .inl{flex-basis:100%;display:flex;gap:6px}
+.crow .inl input{flex:1;min-width:0;height:38px;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:0 10px;font-size:14.5px}
+.crow .inl .btn{height:38px}
+.sect{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:12px}
+.sect h3{margin:0;font-size:15px}
+.sect input{width:100%;height:42px;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:0 12px;font-size:15px}
+.sect .row{display:flex;gap:8px;justify-content:flex-end}
+.empty{color:var(--muted);font-size:14px;margin:0}
+.seance{display:flex;align-items:center;gap:16px;padding:16px 20px;border-left:5px solid #3a74c0}
+.se-ic{width:48px;height:48px;border-radius:12px;background:var(--blue-soft);color:var(--blue);display:flex;align-items:center;justify-content:center;flex:none}
+.se-tx{display:flex;flex-direction:column;gap:2px;min-width:0}
+.se-k{font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.se-k b{color:#c62a37}
+.se-d{font-size:19px;line-height:1.3}
+.se-t{font-size:15px;color:var(--ink)}
+.se-l{font-size:14px;color:var(--muted)}
+.sgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#seanceForm .frow{flex-wrap:wrap}
+#seanceForm{max-width:520px;max-height:calc(100dvh - 32px);overflow:auto}
+#seanceForm textarea{width:100%;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:10px 12px;font-size:15px;line-height:1.5;resize:vertical;font-family:inherit}
+.seance{align-items:flex-start}
+.se-scr{padding:26px 28px 30px}
+.cd{display:flex;justify-content:center;gap:10px;margin:8px 0 18px}
+.lcp .cd span{display:flex;flex-direction:column;align-items:center;min-width:78px;padding:10px 6px 8px;border-radius:10px;background:#1f3b6f;color:#fff;box-shadow:0 2px 6px rgba(20,39,78,.18)}
+.lcp .cd b{font-size:36px;line-height:1;font-weight:900;font-variant-numeric:tabular-nums;color:#fff}
+.lcp .cd small{display:block;margin-top:4px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#c9d6ee}
+.cd.cd-go{display:block;font-size:20px;font-weight:700;color:#c62a37}
+.se-pied i{font-variant-numeric:tabular-nums}
+@media (max-width:640px){.cd{gap:6px}.lcp .cd span{min-width:0;flex:1;max-width:72px;padding:8px 4px 6px}.lcp .cd b{font-size:26px}.lcp .cd small{font-size:9.5px;letter-spacing:.04em}}
+.se-scr .lcp-obj{margin-bottom:6px}
+.se-scr-d{font-size:28px;font-weight:700;line-height:1.2;color:#1f3b6f;text-wrap:balance}
+.se-scr-t{margin-top:8px;font-size:18px;font-weight:700;color:#3d4b66;text-wrap:balance}
+.se-scr-l{margin-top:4px;font-size:15px;color:#4a556d}
+.se-scr-odj{margin:20px auto 0;max-width:520px;text-align:left;background:#ffffff;border-radius:10px;padding:16px 20px;box-shadow:0 1px 2px rgba(20,39,78,.08)}
+.se-scr-odj span{display:block;font-size:12.5px;letter-spacing:.1em;text-transform:uppercase;color:#c62a37;font-weight:700;margin-bottom:8px}
+.se-scr-odj ol{margin:0;padding-left:24px;display:flex;flex-direction:column;gap:6px;font-size:16px;line-height:1.45;color:#14274e}
+.se-scr-odj li::marker{color:#3a74c0;font-weight:700}
+.se-pied{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:4px 10px;padding:10px 16px;background:#cdd6ec;color:#1f3b6f;font-size:14px;text-align:center}
+.se-pied b{font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.se-pied i{font-style:normal;font-weight:700;color:#c62a37}
+@media (max-width:640px){.se-scr{padding:20px 16px 24px}.se-scr-d{font-size:22px}.se-scr-odj{padding:14px 16px}.se-scr-odj ol{font-size:15px}}
+.se-odj{margin:10px 0 0;padding-top:10px;border-top:1px solid var(--line)}
+.se-odj>span{display:block;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-bottom:6px}
+.se-odj ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:3px;font-size:15px;line-height:1.45}
+.se-odj li::marker{color:#3a74c0;font-weight:700}
+#sDel{color:var(--ko);margin-right:auto}
+.chip .pchip{min-width:0;height:18px;font-size:11px;box-shadow:0 0 0 1px rgba(255,255,255,.35)}
+.me .pchip{vertical-align:1px}
+.me .mp{color:var(--ink);font-weight:500}
+.mparti{display:flex;align-items:center;gap:8px;margin-top:10px;color:var(--ink);font-size:15px}
+.compo h3{margin-bottom:6px}
+.compo-in{display:flex;align-items:center;gap:18px 28px;flex-wrap:wrap}
+.compo-in svg{flex:1 1 300px;max-width:420px;min-width:240px;height:auto}
+.compo-leg{list-style:none;margin:0;padding:0;flex:1 1 260px;min-width:0;max-width:100%;display:flex;flex-direction:column;gap:6px}
+.compo-leg li{display:flex;align-items:center;gap:8px;font-size:14px}
+.compo-leg .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
+.compo-leg b{font-variant-numeric:tabular-nums;min-width:28px;text-align:right}
+.compo-leg .pc{color:var(--muted);font-size:12.5px;min-width:40px;text-align:right;font-variant-numeric:tabular-nums}
+.acct{flex:1;width:100%;max-width:880px;margin:0 auto;padding:22px 16px 40px;display:flex;flex-direction:column;gap:14px}
+.ac-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.ac-top h2{margin:0;font-size:24px}
+.acct .tabs{max-width:420px}
+.ac-sum{display:flex;flex-wrap:wrap;gap:8px 14px}
+.ac-sum>span{display:inline-flex;align-items:center;gap:6px;font-size:14px}
+.ac-tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ac-tools input[type=search]{flex:1 1 220px;min-width:0;height:40px;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:0 12px;font-size:15px}
+.ac-tools select{height:40px;border:1px solid var(--line);border-radius:8px;background:var(--surface);padding:0 8px;font-size:14px;max-width:260px}
+.acct .card{padding:16px 18px}
+.acct h3{margin:0 0 10px;font-size:16px;display:flex;align-items:center;gap:10px}
+.acct h3 small{margin-left:auto;font-weight:500;color:var(--muted);font-size:13px}
+.ac-grp{border-left:4px solid var(--pc,var(--line))}
+.ac-list{display:flex;flex-direction:column}
+.ac-row{display:flex;align-items:center;gap:6px 10px;flex-wrap:wrap;padding:8px 0;border-top:1px solid var(--line)}
+.ac-row:first-child{border-top:0}
+.ac-row .id{flex:1 1 180px;min-width:0;overflow:hidden;text-overflow:ellipsis;font-size:15px}
+.ac-row .id small{display:block;color:var(--muted);font-size:12px}
+.ac-row select{height:34px;border:1px solid var(--line);border-radius:7px;background:var(--surface);padding:0 6px;font-size:13.5px;max-width:200px}
+.ac-row .lk{border:0;background:none;color:var(--blue);font-size:13px;font-weight:600;padding:4px}
+.ac-row .lk.del{color:var(--ko)}
+.ac-row .tag{color:var(--muted);font-size:12.5px}
+.ac-row .inl{flex-basis:100%;display:flex;gap:6px}
+.ac-row .inl input{flex:1;min-width:0;height:38px;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:0 10px;font-size:14.5px}
+.ac-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.ac-grid label{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:5px}
+.ac-grid input,.ac-grid select{width:100%;height:40px;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:0 10px;font-size:15px}
+.acct .row{display:flex;justify-content:flex-end;gap:8px;margin-top:12px}
+.ac-imp p{margin:0 0 10px;font-size:13.5px}
+.ac-imp .err{color:var(--ko);font-size:14px}
+.ac-imp label.btn{cursor:pointer}
+.ac-imp-sum .okc{color:#1c7a3c;font-weight:600}.ac-imp-sum .koc{color:var(--ko);font-weight:600}
+.ac-imp .tw{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:8px}
+.imp-t{width:100%;border-collapse:collapse;font-size:13.5px}
+.imp-t th,.imp-t td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.imp-t thead th{position:sticky;top:0;background:var(--surface);font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.imp-t tr.ko td{color:var(--muted)}
+.imp-t tr.ko td:last-child{color:var(--ko)}
+.pchip{display:inline-flex;align-items:center;justify-content:center;min-width:46px;height:20px;padding:0 6px;border-radius:4px;background:var(--pc);color:#fff;font-size:11.5px;font-weight:700;letter-spacing:.03em;flex:none}
+.cgrp{display:flex;align-items:center;gap:8px;margin:8px 0 2px;font-size:13.5px}
+.cgrp:first-child{margin-top:0}
+.cgrp b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cgrp span:last-child{color:var(--muted);font-size:12.5px}
+.sect select,.crow .inl select{width:100%;height:42px;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:0 10px;font-size:15px}
+.crow .inl select{height:38px;flex:1;min-width:0;width:auto}
+.parts h3{margin:0 0 12px;font-size:17px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.parts h3 small{font-size:12.5px;font-weight:500;color:var(--muted)}
+.parts .tw{overflow-x:auto}
+.parts table{width:100%;border-collapse:collapse;font-size:14px;font-variant-numeric:tabular-nums}
+.parts th,.parts td{padding:8px 5px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+.parts th:first-child,.parts td:first-child{text-align:left}
+.parts thead th{font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.parts tbody th{font-weight:500}
+.parts .pl{display:inline-flex;align-items:center;gap:8px}
+.parts .pn{max-width:220px;overflow:hidden;text-overflow:ellipsis;font-size:13px;color:var(--muted)}
+.parts tfoot th,.parts tfoot td{font-weight:700;border-bottom:0}
+.parts .p{color:var(--v-pour)}.parts .c{color:var(--v-contre)}.parts .a,.parts .nv{color:var(--muted)}
+.parts .barc{padding-left:10px}
+.parts .bar{width:96px}
+.parts .pn{max-width:140px}
+.parts .bar{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--paper);box-shadow:inset 0 0 0 1px var(--line)}
+.parts .bar i{display:block;height:100%}
+.parts .bar i.p{background:#3f6fbf}.parts .bar i.a{background:#fff;box-shadow:inset 0 0 0 1px #9aa3b2}.parts .bar i.c{background:#c62a37}
+@media (max-width:640px){.parts .pn{display:none}.parts .barc{display:none}}
+/* Animation du résultat */
+.sweep{stroke-dasharray:100 100;stroke-dashoffset:0}
+.lcp.anim .sweep{animation:sweep 1.4s cubic-bezier(.3,.7,.25,1) .55s both}
+.lcp.anim .maj{animation:fadein .4s 1.8s both}
+.lcp.anim .lcp-v{animation:pop .5s 2s both}
+.lcp.anim .lcp-abs,.lcp.anim .lcp-leg{animation:fadein .5s .9s both}
+@keyframes sweep{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+@keyframes fadein{from{opacity:0}}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.96)}}
+/* Demi-cercle 3D */
+.h3d{perspective:820px;perspective-origin:50% 0;max-width:470px;margin:-34px auto 6px;padding:0 6px}
+.h3d-plate{position:relative;aspect-ratio:220/116;transform-style:preserve-3d;transform:rotateX(52deg);transform-origin:50% 100%}
+.lcp .h3d svg{position:absolute;inset:0;width:100%;height:100%;margin:0;max-width:none;overflow:visible}
+.h3d-pin{position:absolute;width:0;height:0;transform-style:preserve-3d;transform:rotateX(-52deg)}
+.h3d-tag{position:absolute;bottom:6px;left:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;padding:4px 10px 5px;border-radius:7px;background:#fff;box-shadow:0 2px 6px rgba(20,39,78,.28);border-bottom:3px solid var(--tc);white-space:nowrap;line-height:1.1}
+.h3d-tag::after{content:"";position:absolute;left:50%;top:100%;width:1.5px;height:7px;margin-left:-.75px;background:var(--tc)}
+.h3d-tag.pour{--tc:#3f6fbf}.h3d-tag.contre{--tc:#c62a37}.h3d-tag.abst{--tc:#7d879b;bottom:30px}
+.h3d-tag.abst::after{height:31px}
+.lcp .h3d-tag em{font-style:normal;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#5b6680}
+.lcp .h3d-tag strong{font-size:19px;font-weight:900;color:var(--tc);font-variant-numeric:tabular-nums}
+.lcp.anim .h3d{animation:fadein .4s both}
+.lcp.anim .h3d-plate{animation:fly 1.5s cubic-bezier(.2,.75,.2,1) both}
+.lcp.anim .h3d-tag{animation:tagin .45s 1.75s both}
+@keyframes fly{from{transform:rotateX(80deg) translateY(-18%) scale(1.35)}}
+@keyframes tagin{from{transform:translateX(-50%) translateY(10px) scale(0)}}
+@media (max-width:560px){.h3d{margin-top:-20px}.lcp .h3d-tag strong{font-size:15px}.lcp .h3d-tag em{font-size:9px}.h3d-tag{padding:3px 7px 4px}}
+@media (prefers-reduced-motion:reduce){.lcp.anim .h3d-plate,.lcp.anim .h3d-tag,.lcp.anim .sweep,.lcp.anim .maj,.lcp.anim .lcp-v,.lcp.anim .lcp-abs,.lcp.anim .lcp-leg{animation:none}}
+</style>
+</head>
+<body>
+<header class="tbar">
+  <div class="brand">
+    <span class="logo lg"><svg viewBox="590 380 750 720" fill="none" stroke-width="17" aria-hidden="true"><circle cx="960" cy="715" r="318" stroke="#c4342b"/><circle cx="1000" cy="757" r="318" stroke="#234a96"/><circle cx="959" cy="714" r="226" stroke="#c4342b"/><circle cx="998" cy="752" r="224" stroke="#234a96"/><circle cx="918" cy="768" r="305" stroke="#14166b"/><circle cx="918" cy="767" r="218" stroke="#14166b"/></svg></span>
+    <span><b>Scrutins</b><small>Merídio Rouen<span class="x"> · Simulation parlementaire</span></small></span>
+  </div>
+  <div class="auth" id="auth"></div>
+</header>
+<div class="prez" id="prez" hidden></div>
+<div class="warn" id="warn" hidden></div>
+<main id="main"><p class="load">Chargement…</p></main>
+<div class="acct" id="acct" hidden></div>
+
+<div class="veil" id="loginBox" hidden>
+  <form class="lbox" id="loginForm" autocomplete="on" novalidate role="dialog" aria-modal="true" aria-labelledby="lTitle">
+    <h2 id="lTitle">Espace Député</h2>
+    <p id="lSub">Connectez-vous pour voter.</p>
+    <div><label for="lId">Identifiant</label><input type="text" id="lId" autocomplete="username" autocapitalize="none" spellcheck="false"></div>
+    <div><label for="lPw">Mot de passe</label><input type="password" id="lPw" autocomplete="current-password"></div>
+    <p class="err" id="lErr" hidden></p>
+    <div class="frow"><button class="btn" type="button" id="lCancel">Annuler</button><button class="btn primary" type="submit" id="lGo">Se connecter</button></div>
+  </form>
+</div>
+
+<div class="veil" id="seanceBox" hidden>
+  <form class="lbox" id="seanceForm" novalidate role="dialog" aria-modal="true" aria-labelledby="sTitle">
+    <h2 id="sTitle">Prochaine séance</h2>
+    <p>Annoncée à tous tant qu’aucun scrutin n’est ouvert.</p>
+    <div class="sgrid">
+      <div><label for="sDate">Date</label><input type="date" id="sDate"></div>
+      <div><label for="sHeure">Heure</label><input type="time" id="sHeure"></div>
+    </div>
+    <div><label for="sTitre">Intitulé (facultatif)</label><input type="text" id="sTitre" maxlength="160" placeholder="Ex. : Examen du projet de loi relatif à l’égalité"></div>
+    <div><label for="sLieu">Lieu (facultatif)</label><input type="text" id="sLieu" maxlength="120" placeholder="Ex. : Hôtel de Ville de Rouen, salle des mariages"></div>
+    <div><label for="sOdj">Ordre du jour (un point par ligne)</label><textarea id="sOdj" rows="6" placeholder="Ouverture de la séance&#10;Discussion générale du projet de loi&#10;Examen des amendements à l’article 1&#10;Vote sur l’ensemble du texte"></textarea></div>
+    <p class="err" id="sErr" hidden></p>
+    <div class="frow"><button class="btn" type="button" id="sDel" hidden>Supprimer l’annonce</button><button class="btn" type="button" id="sClose">Annuler</button><button class="btn primary" type="submit">Enregistrer</button></div>
+  </form>
+</div>
+
+<div class="veil" id="meBox" hidden>
+  <form class="lbox" id="meForm" novalidate role="dialog" aria-modal="true" aria-labelledby="mTitle">
+    <h2 id="mTitle">Mon compte</h2>
+    <p id="mSub"></p>
+    <div id="mBody"></div>
+    <p class="err" id="mErr" hidden></p>
+    <div class="frow"><button class="btn" type="button" id="mClose">Fermer</button><button class="btn primary" type="submit" id="mGo">Changer mon mot de passe</button></div>
+  </form>
+</div>
+
+
+<script>
+(function(){
+"use strict";
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const hm = iso => { try { return new Date(iso).toLocaleString('fr-FR', {day:'numeric', month:'long', hour:'2-digit', minute:'2-digit'}); } catch (e) { return ''; } };
+const mem = {};
+const ls = {get(k){ try { return localStorage.getItem(k); } catch (e) { return mem[k] || null; } }, set(k, v){ mem[k] = v; try { localStorage.setItem(k, v); } catch (e) {} }, del(k){ delete mem[k]; try { localStorage.removeItem(k); } catch (e) {} }};
+const plural = (n, w) => n + ' ' + w + (n > 1 ? 's' : '');
+function toast(msg){ document.querySelectorAll('.toast').forEach(t => t.remove()); const t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = msg; document.body.append(t); setTimeout(() => t.remove(), 3200); }
+/* Version GitHub Pages : collez ici l'URL de l'application Web Apps Script (elle se termine par /exec).
+   Dans Apps Script ou Google Sites, cette ligne est ignorée. */
+const API_URL = '';
+const GAS = typeof google !== 'undefined' && google.script && google.script.run;
+const run = (fn, ...a) => GAS ? new Promise((ok, ko) => {
+  const r = google.script.run.withSuccessHandler(ok).withFailureHandler(ko);
+  // Fonction absente du Code.gs déployé : Index et Code.gs ne sont pas de la même version.
+  if (typeof r[fn] !== 'function') { ko(new Error('Le serveur ne connaît pas « ' + fn + ' » : remplacez Code.gs par la dernière version, puis Déployer → Gérer les déploiements → ✏️ → Nouvelle version.')); return; }
+  r[fn](...a);
+}) : !/^https:\/\/script\.google(usercontent)?\.com\//.test(API_URL)
+  ? Promise.reject(new Error('Adresse du serveur manquante : dans index.html, renseignez API_URL avec l’URL /exec de l’application Apps Script.'))
+  : fetch(API_URL, {method: 'POST', body: JSON.stringify({fn, args: a}), headers: {'Content-Type': 'text/plain;charset=utf-8'}, redirect: 'follow'})
+      .catch(() => { throw new Error('Serveur injoignable. Vérifiez votre connexion, puis que l’application Apps Script est déployée avec l’accès « Tout le monde ».'); })
+      .then(r => { if (!r.ok) throw new Error('Erreur du serveur (' + r.status + ').'); return r.json().catch(() => { throw new Error('Réponse inattendue du serveur : vérifiez API_URL et l’accès « Tout le monde ».'); }); })
+      .then(d => { if (d.err) throw new Error(d.err); return d.ok; });
+const errMsg = e => (e && e.message ? e.message : String(e || 'Erreur')).replace(/^(Exception|Error):\s*/, '').replace(/^SESSION:\s*/, '');
+const isSess = e => /SESSION:/.test(e && e.message ? e.message : String(e || ''));
+
+const SIEGES_DEF = 55;
+const PARTIS = {
+  FCP: {nom: 'Front Commun Populaire', c: '#d81f26'},
+  ROSE: {nom: 'Rassemblement des Organisations Socialistes et Écologistes', c: '#b84a8c'},
+  VERTS: {nom: 'Les Verts', c: '#3d8a22'},
+  ADL: {nom: 'Alliance Démocrate et Libérale', c: '#28349a'},
+  PSR: {nom: 'Parti des Souverainistes Républicains', c: '#1c2c4e'},
+  ANF: {nom: 'Alliance Nationale Française', c: '#4853c7'},
+  NI: {nom: 'Non-inscrits', c: '#7a8194'}
+};
+const ORDRE = ['FCP', 'ROSE', 'VERTS', 'ADL', 'PSR', 'ANF', 'NI'];
+const chipP = p => `<span class="pchip" style="--pc:${(PARTIS[p] || PARTIS.NI).c}">${esc(p || 'NI')}</span>`;
+/* Tableau de répartition par groupe : réservé à la Présidence (le serveur ne l'envoie qu'à elle). */
+function partisHtml(L, live){
+  if (!L || !L.length) return '';
+  const tot = {membres: 0, pour: 0, contre: 0, abst: 0};
+  L.forEach(x => { for (const k in tot) tot[k] += x[k] || 0; });
+  const row = (x, lab) => { const vot = x.pour + x.contre + x.abst, nv = Math.max(0, x.membres - vot);
+    const w = k => vot ? (x[k] / vot * 100).toFixed(1) : 0;
+    return `<tr><th scope="row"><span class="pl">${lab}</span></th><td>${x.membres}</td><td class="p">${x.pour}</td><td class="c">${x.contre}</td><td class="a">${x.abst}</td><td class="nv">${nv}</td><td class="barc"><span class="bar">${vot ? `<i class="p" style="width:${w('pour')}%"></i><i class="a" style="width:${w('abst')}%"></i><i class="c" style="width:${w('contre')}%"></i>` : ''}</span></td></tr>`; };
+  return `<section class="card parts"><h3>Répartition par groupe <small>Présidence uniquement${live ? ' · en direct' : ''}</small></h3><div class="tw"><table>
+    <thead><tr><th scope="col">Groupe</th><th scope="col">Membres</th><th scope="col" class="p">Pour</th><th scope="col" class="c">Contre</th><th scope="col" class="a">Abst.</th><th scope="col" class="nv">Non-votants</th><th scope="col"><span class="sr">Répartition</span></th></tr></thead>
+    <tbody>${L.map(x => row(x, `${chipP(x.p)}<span class="pn">${esc((PARTIS[x.p] || PARTIS.NI).nom)}</span>`)).join('')}</tbody>
+    <tfoot>${row(tot, 'Total')}</tfoot></table></div></section>`;
+}
+const CH = {pour: 'Pour', contre: 'Contre', abst: 'Abstention'};
+const VC = {pour: '#3f6fbf', contre: '#c62a37', abst: '#ffffff', nv: '#cfd2d8'};
+
+let jeton = ls.get('vMR-sess') || '';
+let E = null, lastJson = '', viewId = null, busy = false, editPid = null, untilAt = 0, pollTimer = null, inflight = false;
+const role = () => E && E.moi ? E.moi.role : null;
+const isP = () => role() === 'p', isD = () => role() === 'd';
+const SC = () => E && E.courant;
+
+/* ---------- Hémicycle façon LCP, en 3D ---------- */
+let maskSeq = 0;
+const VC_SIDE = {pour: '#2b528f', abst: '#b4bbc8', contre: '#8e1c26', nv: '#c3c8d2'};   // flancs (plus sombres)
+const TILT = 52;   // inclinaison du plateau, en degrés
+function hemi(r){
+  /* Demi-cercle posé à plat, vu en perspective : Pour à gauche, Abstention au milieu, Contre à droite. */
+  const T = r.pour + r.abst + r.contre, R = 100, r0 = 56, cx = 110, cy = 108;
+  const pt = (a, d) => (cx + d * Math.cos(a)).toFixed(2) + ' ' + (cy - d * Math.sin(a)).toFixed(2);
+  const seg = (a0, a1, fill, stroke, sw) => `<path d="M${pt(a0, R)} A${R} ${R} 0 0 1 ${pt(a1, R)} L${pt(a1, r0)} A${r0} ${r0} 0 0 0 ${pt(a0, r0)}Z" fill="${fill}" stroke="${stroke}" stroke-width="${sw}" stroke-linejoin="round"/>`;
+  const parts = [];
+  if (T) { let a = Math.PI; ['pour', 'abst', 'contre'].forEach(k => { if (!r[k]) return; const b = Math.max(0, a - Math.PI * r[k] / T); parts.push([k, a, b]); a = b; }); }
+  const shapes = side => !T ? seg(Math.PI, 0, side ? VC_SIDE.nv : VC.nv, side ? VC_SIDE.nv : '#ececec', 1)
+    : parts.map(([k, a, b]) => side ? seg(a, b, VC_SIDE[k], VC_SIDE[k], 0.6) : seg(a, b, VC[k], k === 'abst' ? '#9aa3b2' : '#ececec', k === 'abst' ? 0.8 : 1.2)).join('');
+  /* Masque en arc : il se « déroule » de gauche à droite quand la carte est animée. */
+  const mid = (R + r0) / 2;
+  const layer = (inner, z, cls) => { const id = 'hm' + (++maskSeq); return `<svg class="${cls}" viewBox="0 0 220 116" aria-hidden="true" style="transform:translateZ(${z}px)"><mask id="${id}"><path class="sweep" d="M${pt(Math.PI, mid)} A${mid} ${mid} 0 0 1 ${pt(0, mid)}" fill="none" stroke="#fff" stroke-width="${R - r0 + 8}" pathLength="100"/></mask><g mask="url(#${id})">${inner}</g></svg>`; };
+  let h = '';
+  for (let i = 16; i >= 1; i--) h += layer(shapes(true), -i, 'h3d-l');   // épaisseur du plateau
+  h += layer(shapes(false), 0, 'h3d-top');
+  h += `<svg class="h3d-top maj" viewBox="0 0 220 116" aria-hidden="true" style="transform:translateZ(.5px)"><line x1="${cx}" y1="${cy - r0 + 4}" x2="${cx}" y2="${cy - R - 4}" stroke="#1f3b6f" stroke-width="1.2" stroke-dasharray="3 3" opacity=".6"/></svg>`;
+  /* Étiquettes debout au-dessus de chaque secteur, comme sur un plateau télé. */
+  const LBL = {pour: 'Pour', abst: 'Abstention', contre: 'Contre'};
+  parts.forEach(([k, a, b]) => {
+    const m = (a + b) / 2, d = (R + r0) / 2, x = cx + d * Math.cos(m), y = cy - d * Math.sin(m);
+    h += `<div class="h3d-pin" style="left:${(x / 2.2).toFixed(2)}%;top:${(y / 1.16).toFixed(2)}%"><div class="h3d-tag ${k}"><em>${LBL[k]}</em><strong>${r[k]}</strong></div></div>`;
+  });
+  return `<div class="h3d" role="img" aria-label="Résultat : ${r.pour} pour, ${plural(r.abst, 'abstention')}, ${r.contre} contre"><div class="h3d-plate">${h}</div></div>`;
+}
+const LOGO = '<svg viewBox="590 380 750 720" fill="none" stroke-width="17" aria-hidden="true"><circle cx="960" cy="715" r="318" stroke="#c4342b"/><circle cx="1000" cy="757" r="318" stroke="#234a96"/><circle cx="959" cy="714" r="226" stroke="#c4342b"/><circle cx="998" cy="752" r="224" stroke="#234a96"/><circle cx="918" cy="768" r="305" stroke="#14166b"/><circle cx="918" cy="767" r="218" stroke="#14166b"/></svg>';
+/* Écran façon tableau d'affichage : colonne avec logo et heure en direct, bandeau avec la date. */
+const heure = () => new Date().toLocaleTimeString('fr-FR', {hour: '2-digit', minute: '2-digit'});
+const jour = () => { const d = new Date().toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'}); return d.charAt(0).toUpperCase() + d.slice(1); };
+function ecran(titre, corps, pied){
+  return `<section class="ecran"><aside class="ec-side"><span class="ec-logo"><span class="ec-tile">${LOGO}</span><small>Simulation<br>parlementaire</small></span><time class="ec-clk" data-clk>${heure()}</time></aside>
+    <div class="ec-main"><header class="ec-head"><span class="ec-date" data-jour>${jour()}</span><h2>${esc(titre)}</h2><span class="ec-flag" aria-hidden="true"><i></i><i></i><i></i></span></header>${corps}${pied || ''}</div></section>`;
+}
+setInterval(() => {
+  const h = heure(), j = jour();
+  document.querySelectorAll('[data-clk]').forEach(e => { if (e.textContent !== h) e.textContent = h; });
+  document.querySelectorAll('[data-jour]').forEach(e => { if (e.textContent !== j) e.textContent = j; });
+  majCd();
+}, 1000);
+const ANIM = new Set();   // résultats déjà animés (l'animation ne joue qu'une fois par scrutin)
+function lcpCard(r, sc, live, pied){
+  const anim = !live && sc && !ANIM.has(sc.id);
+  if (anim) ANIM.add(sc.id);
+  const n = v => anim ? `<b data-n="${v}">0</b>` : `<b>${v}</b>`;
+  const leg = [['pour', 'Pour'], ['abst', 'Abstention'], ['contre', 'Contre']].map(([k, l]) => `<span><i style="background:${VC[k]}${k === 'abst' ? ';box-shadow:inset 0 0 0 1px #9aa3b2' : ''}"></i>${l}</span>`).join('') ;
+  return ecran(live ? 'Scrutin en cours' : 'Résultats du scrutin', `<div class="lcp${anim ? ' anim' : ''}">${sc ? `<div class="lcp-obj">Scrutin n° ${esc(sc.num)}${live ? ' · en cours' : ''}</div><div class="lcp-t">${esc(sc.objet || '')}</div>` : ''}
+    <div class="lcp-g2"><div>${n(r.votants)}<span>votants</span></div><i></i><div>${n(r.exprimes)}<span>exprimés</span></div></div>
+    <div class="lcp-maj">${n(r.majorite)}<span>majorité absolue</span></div>
+    <div class="lcp-g2 big"><div class="p">${n(r.pour)}<span>Pour</span></div><i></i><div class="c">${n(r.contre)}<span>Contre</span></div></div>
+    <div class="lcp-abs">${plural(r.abst, 'abstention')}</div>
+    ${hemi(r)}
+    ${live ? '' : `<div class="lcp-v ${r.adopte ? 'ok' : 'ko'}">${r.adopte ? 'L’Assemblée a adopté' : 'L’Assemblée n’a pas adopté'}</div>`}
+    <div class="lcp-leg">${leg}</div></div>`, pied);
+}
+
+/* Conserve la saisie et le focus quand on redessine une zone. */
+function keep(el, fn){
+  const vals = {}; el.querySelectorAll('input[id]:not([type=file]),select[id]:not([data-chp])').forEach(i => { vals[i.id] = i.value; });
+  const a = document.activeElement, fid = a && el.contains(a) && a.id ? a.id : null;
+  let s0 = null, s1 = null; try { if (fid) { s0 = a.selectionStart; s1 = a.selectionEnd; } } catch (e) {}
+  fn();
+  for (const id in vals) { const i = document.getElementById(id); if (i && el.contains(i) && !i.dataset.fresh && (i.tagName !== 'SELECT' || [...i.options].some(o => o.value === vals[id]))) i.value = vals[id]; }
+  if (fid) { const i = document.getElementById(fid); if (i) { i.focus(); try { if (s0 != null) i.setSelectionRange(s0, s1); } catch (e) {} } }
+}
+
+/* ---------- En-tête ---------- */
+function renderAuth(){
+  const m = E && E.moi;
+  $('#auth').innerHTML = m
+    ? `<span class="chip"><b>${m.role === 'p' ? 'Présidence' : 'Député'}</b>${m.parti ? chipP(m.parti) : ''}${esc(m.nom)}</span><button class="lbtn" type="button" data-a="me">Mon compte</button><button class="lbtn" type="button" data-a="out">Déconnexion</button>`
+    : `<button class="lbtn" type="button" data-a="d">Espace Député</button><button class="lbtn" type="button" data-a="p">Espace Présidence</button>`;
+}
+$('#auth').addEventListener('click', async e => {
+  const b = e.target.closest('[data-a]'); if (!b) return;
+  const a = b.dataset.a;
+  if (a === 'd' || a === 'p') openLogin(a);
+  else if (a === 'me') openMe();
+  else if (a === 'out') { const j = jeton; setSession(''); toast('Déconnecté'); try { await run('deconnexion', j); } catch (x) {} }
+});
+
+/* ---------- Barre Présidence ---------- */
+function renderPrez(){
+  const el = $('#prez');
+  el.hidden = !isP();
+  if (!isP()) { el.innerHTML = ''; return; }
+  keep(el, () => {
+    const H = E.historique || [];
+    let h = '<span class="pz-t">Présidence</span>';
+    if (!SC()) {
+      const fresh = el.dataset.next !== String(E.prochainNum);
+      el.dataset.next = String(E.prochainNum);
+      h += `<label class="sl" for="scNum">N° <input id="scNum" class="n" type="number" min="1" inputmode="numeric" value="${esc(E.prochainNum)}"${fresh ? ' data-fresh="1"' : ''}></label>`;
+      h += `<label class="sr" for="scObj">Objet du scrutin</label><input id="scObj" type="text" maxlength="160" placeholder="Objet du vote (ex. Amendement FCP-3, Article 2…)">`;
+      h += `<label class="sl" for="scSeats">Sièges <input id="scSeats" class="num" type="number" min="1" max="999" inputmode="numeric" value="${esc(E.sieges || SIEGES_DEF)}"></label>`;
+      h += `<button class="btn primary" type="button" data-sc="open">Ouvrir le scrutin</button>`;
+      if (H.length) h += E.affichage === 'vide'
+        ? `<button class="btn" type="button" data-sc="aff" data-mode="resultat">Afficher le dernier résultat</button>`
+        : `<button class="btn" type="button" data-sc="aff" data-mode="vide">Afficher « Aucun scrutin en cours »</button>`;
+    } else {
+      const r = E.res || {votants: 0, pour: 0, contre: 0, abst: 0};
+      h += `<span class="state">Scrutin n° ${esc(SC().num)} ouvert</span><span class="cur" title="${esc(SC().objet)}">${esc(SC().objet)}</span>`;
+      h += `<span class="tly"><b>${plural(r.votants, 'vote')}</b> · <i class="p">${r.pour} pour</i> · <i class="c">${r.contre} contre</i> · <i class="a">${r.abst} abst.</i></span>`;
+      h += `<button class="btn ko" type="button" data-sc="close">Clore le scrutin</button><button class="btn" type="button" data-sc="cancel" title="Le scrutin retourne dans les scrutins préparés">Annuler</button>`;
+    }
+    h += `<button class="btn end" type="button" data-sc="seance">Prochaine séance</button><button class="btn" type="button" data-sc="cpt">Comptes</button>`;
+    el.innerHTML = h;
+  });
+  el.querySelectorAll('[data-fresh]').forEach(i => delete i.dataset.fresh);
+}
+
+/* ---------- Zone principale ---------- */
+function ballotHtml(){
+  const s = SC(), mine = E.monVote;
+  return `<section class="card ballot" aria-labelledby="blT"><span class="bl-k"><i></i>Scrutin n° ${esc(s.num)} ouvert</span><h2 id="blT">${esc(s.objet || '')}</h2>
+    <p class="me">Vous votez en tant que <b>${esc(E.moi.nom)}</b>${E.moi.parti ? ` · ${chipP(E.moi.parti)} <span class="mp">${esc((PARTIS[E.moi.parti] || PARTIS.NI).nom)}</span>` : ''}</p>
+    <div class="vbs" role="group" aria-label="Votre vote">${['pour', 'contre', 'abst'].map(c => `<button type="button" class="vb ${c}" data-v="${c}" aria-pressed="${mine === c}"${busy ? ' disabled' : ''}>${CH[c]}</button>`).join('')}</div>
+    <p class="bl-n">${mine ? `Vote enregistré : <b>${CH[mine]}</b>. Vous pouvez le modifier jusqu’à la clôture.` : 'Choisissez votre vote. Il reste secret : seule la Présidence le voit.'}</p></section>`;
+}
+function visitorOpenHtml(){
+  const s = SC();
+  return `<section class="card ballot"><span class="bl-k"><i></i>Scrutin n° ${esc(s.num)} ouvert</span><h2>${esc(s.objet || '')}</h2>
+    <p class="bl-n" style="margin:0">Pour voter, connectez-vous à l’espace Député.</p>
+    <button class="btn primary login-cta" type="button" data-login="d">Espace Député</button></section>`;
+}
+function presLiveHtml(){
+  const rows = (E.votes || []).slice().sort((a, b) => ['pour', 'contre', 'abst'].indexOf(a.c) - ['pour', 'contre', 'abst'].indexOf(b.c) || a.nom.localeCompare(b.nom, 'fr'));
+  const open = $('#det') ? $('#det').open : false;
+  return lcpCard(E.res, SC(), true) + partisHtml(E.partis, true) +
+    `<details class="det" id="det"${open ? ' open' : ''}><summary>Détail nominatif (${rows.length}) <small>Présidence uniquement · jamais publié</small></summary>` +
+    (rows.length ? `<div class="vlist">${rows.map(r => `<div class="vrow">${chipP(r.parti)}<span class="nm">${esc(r.nom)}</span><span class="vtag ${esc(r.c)}">${CH[r.c] || ''}</span></div>`).join('')}</div>` : '<p class="muted" style="padding:0 18px 18px;margin:0">Aucun vote pour l’instant.</p>') + '</details>';
+}
+function prepHtml(){
+  const P = E.prepares || [];
+  const ed = P.find(p => p.id === editPid) || null;
+  if (editPid && !ed) editPid = null;
+  let h = `<section class="card prep"><h3>Scrutins préparés</h3><p>Préparez les scrutins à l’avance, puis ouvrez-les le moment venu.</p>`;
+  h += P.length ? `<div class="plist">${P.map(p => `<div class="prow${p.id === editPid ? ' editing' : ''}"><span class="n">N° ${esc(p.num)}</span><span class="o" title="${esc(p.objet)}">${esc(p.objet)}</span><span class="s">${esc(p.sieges)} sièges</span><button type="button" class="btn primary" data-popen="${esc(p.id)}"${SC() ? ' disabled' : ''}>Ouvrir</button><button type="button" class="btn" data-pedit="${esc(p.id)}">Modifier</button><button type="button" class="iconb" data-pdel="${esc(p.id)}" aria-label="Supprimer le scrutin préparé n° ${esc(p.num)}"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button></div>`).join('')}</div>` : '<p class="empty" style="margin-bottom:12px">Aucun scrutin préparé.</p>';
+  h += `<div class="pform"><label for="pNum">N°</label><input id="pNum" type="number" min="1" inputmode="numeric" placeholder="N°" value="${ed ? esc(ed.num) : ''}"${ed ? ' data-fresh="1"' : ''}>
+    <label class="sr" for="pObj">Objet</label><input id="pObj" type="text" maxlength="160" placeholder="Objet du scrutin" value="${ed ? esc(ed.objet) : ''}"${ed ? ' data-fresh="1"' : ''}>
+    <label for="pSeats">Sièges</label><input id="pSeats" type="number" min="1" max="999" inputmode="numeric" value="${esc(ed ? ed.sieges : (E.sieges || SIEGES_DEF))}"${ed ? ' data-fresh="1"' : ''}>
+    <button type="button" class="btn primary" data-psave="1">${ed ? 'Enregistrer' : 'Préparer'}</button>${ed ? '<button type="button" class="btn" data-pcancel="1">Annuler</button>' : ''}</div></section>`;
+  return h;
+}
+function histHtml(){
+  const H = E.historique || [];
+  if (!H.length) return '';
+  const cur = viewId || (E.affichage === 'vide' ? null : H[0].id);
+  return `<section class="hist"><h3>Scrutins précédents</h3><div class="scls">${H.map(s => {
+    const r = s.res;
+    return `<div class="sclw"><button type="button" class="scl" data-res="${esc(s.id)}"${!SC() && s.id === cur ? ' aria-current="true"' : ''}${r ? '' : ' disabled'}><span class="n">N° ${esc(s.num)}</span><span class="o" title="${esc(s.objet || '')}">${esc(s.objet || '')}</span>${r ? `<span class="st ${r.adopte ? 'ok' : 'ko'}">${r.adopte ? 'Adopté' : 'Rejeté'}</span><span class="r">${r.pour} pour · ${r.contre} contre · ${plural(r.abst, 'abstention')}</span>` : '<span class="st wt">Résultat en cours</span>'}</button>${isP() ? `<button type="button" class="sdel" data-del-sc="${esc(s.id)}" aria-label="Supprimer le scrutin n° ${esc(s.num)}" title="Supprimer ce scrutin"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg></button>` : ''}</div>`;
+  }).join('')}</div></section>`;
+}
+/* ---------- Prochaine séance ---------- */
+function seanceDate(se){
+  const [y, m, d] = se.date.split('-').map(Number), [hh, mi] = (se.heure || '00:00').split(':').map(Number);
+  return new Date(y, m - 1, d, hh, mi);
+}
+function seanceTxt(se){
+  const dt = seanceDate(se);
+  let j = dt.toLocaleDateString('fr-FR', {weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'});
+  j = j.charAt(0).toUpperCase() + j.slice(1);
+  return j + (se.heure ? ' à ' + se.heure.replace(':', ' h ') : '');
+}
+function seanceDans(se){
+  const dt = seanceDate(se), now = new Date();
+  const j0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()), j1 = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+  const n = Math.round((j1 - j0) / 864e5);
+  if (n < 0) return '';
+  if (n === 0) return se.heure && dt < now ? 'En cours' : 'Aujourd’hui';
+  if (n === 1) return 'Demain';
+  return 'Dans ' + n + ' jours';
+}
+/* Séance annoncée encore d'actualité (masquée 12 h après le début, ou le lendemain sans heure). */
+function seanceActive(){
+  const se = E && E.seance;
+  if (!se || !se.date) return null;
+  return Date.now() > seanceDate(se).getTime() + (se.heure ? 12 : 36) * 3600e3 ? null : se;
+}
+/* Compte à rebours jusqu'au début de la séance (jours, heures, minutes, secondes), mis à jour chaque seconde. */
+const CD_U = [['j', 864e5, 'jour'], ['h', 36e5, 'heure'], ['m', 6e4, 'minute'], ['s', 1e3, 'seconde']];
+function cdParts(ms){ let r = Math.max(0, ms); return CD_U.map(([k, d, l]) => { const v = Math.floor(r / d); r -= v * d; return {k, v, l: l + (v > 1 ? 's' : '')}; }); }
+function cdHtml(se){
+  const t = seanceDate(se).getTime();
+  return `<div class="cd" data-cd="${t}" role="timer" aria-label="Temps restant avant la séance">${cdParts(t - Date.now()).map(p => `<span><b data-u="${p.k}">${String(p.v).padStart(2, '0')}</b><small data-l="${p.k}">${p.l}</small></span>`).join('')}</div>`;
+}
+const cdCourt = ms => { const [j, h, m, sec] = cdParts(ms).map(p => p.v); return (j ? j + ' j ' : '') + String(h).padStart(2, '0') + ' h ' + String(m).padStart(2, '0') + ' min ' + String(sec).padStart(2, '0') + ' s'; };
+function majCd(){
+  const now = Date.now();
+  document.querySelectorAll('[data-cd]').forEach(el => {
+    const ms = +el.dataset.cd - now;
+    if (ms <= 0) { if (!el.classList.contains('cd-go')) { el.className = 'cd cd-go'; el.textContent = 'La séance a commencé'; } return; }
+    cdParts(ms).forEach(p => {
+      const b = el.querySelector(`[data-u="${p.k}"]`), l = el.querySelector(`[data-l="${p.k}"]`);
+      const v = String(p.v).padStart(2, '0');
+      if (b && b.textContent !== v) b.textContent = v;
+      if (l && l.textContent !== p.l) l.textContent = p.l;
+    });
+  });
+  document.querySelectorAll('[data-cdc]').forEach(el => { const ms = +el.dataset.cdc - now; const t = ms > 0 ? 'Dans ' + cdCourt(ms) : 'En cours'; if (el.textContent !== t) el.textContent = t; });
+}
+/* Corps de l'écran « Prochaine séance » (quand aucun résultat n'est affiché). */
+function seanceEcran(se){
+  const dans = seanceDans(se);
+  const avant = se.heure && seanceDate(se).getTime() > Date.now();
+  const haut = avant ? `<div class="lcp-obj">La séance commence dans</div>${cdHtml(se)}` : se.heure ? `<div class="lcp-obj">Séance en cours</div>` : dans ? `<div class="lcp-obj">${esc(dans)}</div>` : '';
+  return `<div class="lcp se-scr">${haut}<div class="se-scr-d">${esc(seanceTxt(se))}</div>${se.titre ? `<div class="se-scr-t">${esc(se.titre)}</div>` : ''}${se.lieu ? `<div class="se-scr-l">${esc(se.lieu)}</div>` : ''}
+    ${se.odj && se.odj.length ? `<div class="se-scr-odj"><span>Ordre du jour</span><ol>${se.odj.map(x => `<li>${esc(x)}</li>`).join('')}</ol></div>` : ''}</div>`;
+}
+/* Bandeau en bas de l'écran (quand un résultat est affiché). */
+function seancePied(){
+  const se = seanceActive(); if (!se) return '';
+  const dans = seanceDans(se);
+  const t = seanceDate(se).getTime();
+  const cd = se.heure && t > Date.now() ? `<i data-cdc="${t}">Dans ${esc(cdCourt(t - Date.now()))}</i>` : dans ? `<i>${esc(dans)}</i>` : '';
+  return `<div class="se-pied"><b>Prochaine séance</b><span>${esc(seanceTxt(se))}</span>${cd}</div>`;
+}
+function seanceHtml(){
+  const se = E && E.seance;
+  if (!se || !se.date) return '';
+  // Masquée 12 h après le début annoncé (ou le lendemain si pas d'heure).
+  const fin = seanceDate(se).getTime() + (se.heure ? 12 : 36) * 3600e3;
+  if (Date.now() > fin) return '';
+  const dans = seanceDans(se);
+  return `<section class="card seance" aria-label="Prochaine séance"><div class="se-ic" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
+    <div class="se-tx"><span class="se-k">Prochaine séance${dans ? ` · <b>${esc(dans)}</b>` : ''}</span><b class="se-d">${esc(seanceTxt(se))}</b>${se.titre ? `<span class="se-t">${esc(se.titre)}</span>` : ''}${se.lieu ? `<span class="se-l">${esc(se.lieu)}</span>` : ''}${se.odj && se.odj.length ? `<div class="se-odj"><span>Ordre du jour</span><ol>${se.odj.map(x => `<li>${esc(x)}</li>`).join('')}</ol></div>` : ''}</div></section>`;
+}
+function openSeance(){
+  const se = (E && E.seance) || {};
+  $('#sDate').value = se.date || ''; $('#sHeure').value = se.heure || ''; $('#sLieu').value = se.lieu || ''; $('#sTitre').value = se.titre || ''; $('#sOdj').value = (se.odj || []).join('\n');
+  $('#sDel').hidden = !se.date; $('#sErr').hidden = true;
+  $('#seanceBox').hidden = false; setTimeout(() => $('#sDate').focus(), 20);
+}
+const closeSeance = () => { $('#seanceBox').hidden = true; };
+$('#sClose').onclick = closeSeance;
+$('#seanceBox').addEventListener('click', e => { if (e.target.id === 'seanceBox') closeSeance(); });
+$('#seanceForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  if (!$('#sDate').value) { $('#sErr').hidden = false; $('#sErr').textContent = 'Indiquez la date de la séance.'; return; }
+  if (await presAct('definirSeance', {date: $('#sDate').value, heure: $('#sHeure').value, lieu: $('#sLieu').value, titre: $('#sTitre').value, odj: $('#sOdj').value})) { closeSeance(); toast('Prochaine séance annoncée'); }
+});
+$('#sDel').addEventListener('click', e => arm(e.currentTarget, 'Confirmer la suppression', async () => { if (await presAct('definirSeance', null)) { closeSeance(); toast('Prochaine séance retirée'); } }));
+/* Le rappel « Dans N jours » change à minuit : on redessine chaque minute s'il y a une séance annoncée. */
+setInterval(() => { if (E && E.seance && !SC() && !acctOpen) { lastJson = ''; renderMain(); } }, 60000);
+
+function resultHtml(){
+  const H = E.historique || [];
+  const s = H.find(x => x.id === viewId) || (E.affichage === 'vide' ? null : H[0]);
+  if (s && !s.res) {
+    untilAt = Date.now() + (s.dans || 0);
+    if (!isP()) return '<section class="blank" aria-label="Écran vide"><span data-until hidden></span></section>';
+    return ecran('Résultats du scrutin', `<div class="lcp wait"><div class="lcp-obj">Scrutin n° ${esc(s.num)} clos</div><div class="lcp-t">${esc(s.objet || '')}</div><span data-until hidden></span><p class="wmsg">Résultat en cours, merci de patienter…</p><span class="dots" aria-hidden="true"><i></i><i></i><i></i></span></div>`, seancePied());
+  }
+  if (!s && seanceActive()) return ecran('Prochaine séance', seanceEcran(seanceActive()));
+  return s ? lcpCard(s.res, s, false, seancePied()) + `<p class="when">Scrutin clos le ${esc(hm(s.closAt))}</p>` + (isP() ? partisHtml(s.partis, false) : '')
+    : ecran('Aucun scrutin en cours', `<div class="lcp idle"><span class="idle-logo">${LOGO}</span><p class="wmsg">${isD() ? 'Le bulletin de vote apparaîtra ici dès que la Présidence ouvrira le scrutin.' : 'Les résultats s’afficheront ici.'}</p></div>`);
+}
+function renderMain(){
+  if (!E) return;
+  const el = $('#main');
+  keep(el, () => {
+    untilAt = 0;
+    let h = '';
+    if (SC()) h += isP() ? presLiveHtml() : isD() ? ballotHtml() : visitorOpenHtml();
+    else h += resultHtml();
+    if (isP() && !SC()) h += prepHtml();
+    if (!h.startsWith('<section class="blank"')) h += histHtml();   // écran blanc : rien d'autre
+    el.innerHTML = h;
+  });
+  el.querySelectorAll('[data-fresh]').forEach(i => delete i.dataset.fresh);
+  compter(el);
+}
+/* Les chiffres montent de 0 à leur valeur pendant que le demi-cercle se déroule. */
+function compter(root){
+  const els = [...root.querySelectorAll('[data-n]')];
+  if (!els.length) return;
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const t0 = performance.now() + 550, D = 1400;
+  const step = t => {
+    const k = reduce ? 1 : Math.max(0, Math.min(1, (t - t0) / D)), e = 1 - Math.pow(1 - k, 3);
+    els.forEach(b => { if (b.isConnected) b.textContent = Math.round(+b.dataset.n * e); });
+    if (k < 1) requestAnimationFrame(step); else els.forEach(b => b.removeAttribute('data-n'));
+  };
+  requestAnimationFrame(step);
+}
+function renderAll(){ renderAuth(); renderPrez(); renderMain(); if (acctOpen && !isP()) closeCpt(); }
+
+/* Compte à rebours du dépouillement */
+setInterval(() => {
+  if (!untilAt) return;
+  const left = untilAt - Date.now(), el = document.querySelector('[data-until]');
+  if (el) el.textContent = Math.max(0, Math.ceil(left / 1000));
+  if (left <= 0) { untilAt = 0; poll(true); }
+}, 200);
+
+/* ---------- Actualisation ---------- */
+function apply(data, force){
+  const was = E && E.courant ? E.courant.id : null;
+  const j = JSON.stringify(Object.assign({}, data, {historique: (data.historique || []).map(h => Object.assign({}, h, {dans: h.dans ? 1 : 0}))}));
+  E = data;
+  if (was && !E.courant) { viewId = null; window.scrollTo({top: 0, behavior: 'smooth'}); }
+  if (!force && j === lastJson) return;
+  lastJson = j;
+  renderAll();
+}
+async function poll(force){
+  if (inflight && !force) return;
+  inflight = true;
+  const j = jeton;
+  try {
+    const d = await run('etat', j);
+    if (j !== jeton) return;   // réponse d'avant la connexion / déconnexion : on l'ignore
+    apply(d, force); $('#warn').hidden = true;
+    if (j && !d.moi) { setSession(''); toast('Session expirée : reconnectez-vous.'); }
+  }
+  catch (e) {
+    $('#warn').hidden = false;
+    $('#warn').textContent = 'Le serveur ne répond pas (nouvel essai toutes les 3 s) — détail : ' + errMsg(e);
+    if (!E) $('#main').innerHTML = `<div class="card welcome"><h2>Chargement impossible</h2><p>${esc(errMsg(e))}</p><p class="muted">Vérifiez que Code.gs et Index ont bien été remplacés, puis Déployer → Gérer les déploiements → ✏️ → Nouvelle version.</p></div>`;
+  }
+  finally { inflight = false; }
+}
+function schedule(){ clearInterval(pollTimer); pollTimer = setInterval(() => { if (!document.hidden) poll(); }, isP() ? 2500 : 3000); }
+document.addEventListener('visibilitychange', () => { if (!document.hidden) poll(); });
+function setSession(j){ jeton = j; if (j) ls.set('vMR-sess', j); else ls.del('vMR-sess'); lastJson = ''; if (E) E.moi = null; renderAll(); inflight = false; poll(true).then(schedule); }
+async function act(fn, ...a){
+  if (busy) return null;
+  busy = true; document.body.classList.add('saving');
+  try { const d = await run(fn, jeton, ...a); return d; }
+  catch (e) { toast(errMsg(e)); if (isSess(e)) setSession(''); return null; }
+  finally { busy = false; document.body.classList.remove('saving'); }
+}
+async function presAct(fn, ...a){ const d = await act(fn, ...a); if (d) { lastJson = ''; apply(d, true); } return !!d; }
+
+/* ---------- Vote (député) ---------- */
+async function cast(c){
+  if (!SC() || !isD() || busy) return;
+  busy = true; renderMain(); busy = false;
+  const d = await act('voter', c, SC().id);
+  if (d) { E.monVote = d.monVote; toast('Vote enregistré : ' + CH[c]); }
+  lastJson = ''; renderMain();
+}
+
+/* ---------- Clics ---------- */
+function arm(btn, label, fn){
+  if (btn.dataset.armed === '1') { fn(); return; }
+  btn.dataset.armed = '1'; btn.classList.add('armed'); const old = btn.innerHTML; btn.textContent = label;
+  setTimeout(() => { if (btn.isConnected && btn.dataset.armed === '1') { btn.dataset.armed = ''; btn.classList.remove('armed'); btn.innerHTML = old; } }, 4000);
+}
+$('#main').addEventListener('click', e => {
+  const t = e.target;
+  const v = t.closest('[data-v]'); if (v && !v.disabled) { cast(v.dataset.v); return; }
+  const lg = t.closest('[data-login]'); if (lg) { openLogin(lg.dataset.login); return; }
+  const del = t.closest('[data-del-sc]'); if (del && isP()) { arm(del, 'Supprimer ?', () => { if (viewId === del.dataset.delSc) viewId = null; presAct('supprimerScrutin', del.dataset.delSc).then(ok => ok && toast('Scrutin supprimé')); }); return; }
+  const po = t.closest('[data-popen]'); if (po && isP()) { presAct('ouvrir', {pid: po.dataset.popen}).then(ok => ok && toast('Scrutin ouvert : les députés peuvent voter')); return; }
+  const pe = t.closest('[data-pedit]'); if (pe) { editPid = pe.dataset.pedit; lastJson = ''; renderMain(); const i = $('#pObj'); if (i) i.focus(); return; }
+  const pd = t.closest('[data-pdel]'); if (pd && isP()) { arm(pd, 'Supprimer ?', () => { if (editPid === pd.dataset.pdel) editPid = null; presAct('supprimerPrepare', pd.dataset.pdel).then(ok => ok && toast('Scrutin préparé supprimé')); }); return; }
+  if (t.closest('[data-pcancel]')) { editPid = null; renderMainReset(); return; }
+  if (t.closest('[data-psave]')) { savePrep(); return; }
+  const r = t.closest('[data-res]'); if (r && !SC() && !r.disabled) { viewId = r.dataset.res; lastJson = ''; renderMain(); window.scrollTo({top: 0, behavior: 'smooth'}); }
+});
+$('#main').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.closest('.pform')) { e.preventDefault(); savePrep(); } });
+function renderMainReset(){ ['pNum', 'pObj', 'pSeats'].forEach(id => { const i = document.getElementById(id); if (i) i.dataset.fresh = '1'; }); const m = $('#main'); m.querySelectorAll('.pform input').forEach(i => { i.value = ''; }); lastJson = ''; renderMain(); }
+async function savePrep(){
+  const d = {num: $('#pNum').value, objet: $('#pObj').value, sieges: $('#pSeats').value};
+  if (editPid) d.pid = editPid;
+  const wasEdit = !!editPid;
+  if (await presAct('preparer', d)) { editPid = null; document.querySelectorAll('.pform input').forEach(i => { i.value = ''; }); $('#pSeats').value = E.sieges || SIEGES_DEF; toast(wasEdit ? 'Scrutin préparé modifié' : 'Scrutin n° ' + d.num + ' préparé'); }
+}
+async function openDirect(){
+  const d = {num: $('#scNum').value, objet: $('#scObj').value, sieges: $('#scSeats').value};
+  if (await presAct('ouvrir', d)) toast('Scrutin ouvert : les députés peuvent voter');
+}
+$('#prez').addEventListener('click', e => {
+  const b = e.target.closest('[data-sc]'); if (!b || !isP()) return;
+  const k = b.dataset.sc, n = E.res ? E.res.votants : 0;
+  if (k === 'open') openDirect();
+  else if (k === 'cpt') openCpt();
+  else if (k === 'seance') openSeance();
+  else if (k === 'aff') { viewId = null; presAct('changerAffichage', b.dataset.mode).then(ok => ok && toast(b.dataset.mode === 'vide' ? 'Les députés voient « Aucun scrutin en cours »' : 'Les députés voient le dernier résultat')); }
+  else if (k === 'close') arm(b, n ? 'Confirmer (' + plural(n, 'vote') + ')' : 'Aucun vote : clore quand même ?', () => presAct('clore').then(ok => ok && toast('Scrutin clos : résultat dans 5 s (députés : 11 s)')));
+  else if (k === 'cancel') arm(b, 'Confirmer l’annulation', () => presAct('annuler').then(ok => ok && toast('Scrutin annulé : remis dans les scrutins préparés')));
+});
+$('#prez').addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.matches('#scNum,#scObj,#scSeats')) { e.preventDefault(); openDirect(); } });
+
+/* ---------- Connexion ---------- */
+let loginRole = 'd';
+function openLogin(r){
+  loginRole = r === 'p' ? 'p' : 'd';
+  $('#lTitle').textContent = loginRole === 'p' ? 'Espace Présidence' : 'Espace Député';
+  $('#lSub').textContent = loginRole === 'p' ? 'Ouverture et clôture des scrutins, comptes.' : 'Connectez-vous pour voter.';
+  $('#loginBox').hidden = false; $('#lErr').hidden = true; $('#lPw').value = '';
+  setTimeout(() => $('#lId').focus(), 20);
+}
+const closeLogin = () => { $('#loginBox').hidden = true; };
+$('#lCancel').onclick = closeLogin;
+$('#loginBox').addEventListener('click', e => { if (e.target.id === 'loginBox') closeLogin(); });
+$('#loginForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const err = $('#lErr'), go = $('#lGo');
+  go.disabled = true; err.hidden = true;
+  try { const r = await run('connexion', loginRole, $('#lId').value, $('#lPw').value); closeLogin(); setSession(r.jeton); toast('Connecté : ' + r.nom); }
+  catch (x) { err.hidden = false; err.textContent = errMsg(x); $('#lPw').select(); }
+  go.disabled = false;
+});
+
+/* ---------- Mon compte ---------- */
+function openMe(){
+  const m = E && E.moi; if (!m) return;
+  const perm = m.role === 'p' && m.id === 'sofiane.deghmani';
+  $('#mSub').innerHTML = esc(m.role === 'p' ? 'Présidence' : 'Député') + ' · ' + esc(m.id) + (m.parti ? `<span class="mparti">${chipP(m.parti)}<b>${esc((PARTIS[m.parti] || PARTIS.NI).nom)}</b></span>` : '');
+  $('#mErr').hidden = true;
+  $('#mBody').innerHTML = perm ? '<p class="empty">Compte permanent : son mot de passe se modifie dans Code.gs.</p>'
+    : '<div class="sect" style="border:0;padding:0"><label class="sr" for="mOld">Mot de passe actuel</label><input type="password" id="mOld" placeholder="Mot de passe actuel" autocomplete="current-password"><label class="sr" for="mNew">Nouveau mot de passe</label><input type="password" id="mNew" placeholder="Nouveau mot de passe (8 caractères min.)" autocomplete="new-password"><label class="sr" for="mNew2">Confirmer</label><input type="password" id="mNew2" placeholder="Confirmer le nouveau mot de passe" autocomplete="new-password"></div>';
+  $('#mGo').hidden = perm;
+  $('#meBox').hidden = false;
+  setTimeout(() => { const i = $('#mOld'); if (i) i.focus(); }, 20);
+}
+const closeMe = () => { $('#meBox').hidden = true; };
+$('#mClose').onclick = closeMe;
+$('#meBox').addEventListener('click', e => { if (e.target.id === 'meBox') closeMe(); });
+$('#meForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const err = $('#mErr'), o = $('#mOld').value, n = $('#mNew').value;
+  err.hidden = true;
+  if (n !== $('#mNew2').value) { err.hidden = false; err.textContent = 'Les deux nouveaux mots de passe ne correspondent pas.'; return; }
+  $('#mGo').disabled = true;
+  try { await run('changerMonMotDePasse', jeton, o, n); closeMe(); toast('Votre mot de passe a été changé'); }
+  catch (x) { err.hidden = false; err.textContent = errMsg(x); if (isSess(x)) { closeMe(); setSession(''); } }
+  $('#mGo').disabled = false;
+});
+
+/* ---------- Comptes (Présidence) : écran de gestion ---------- */
+let acctOpen = false, cTab = 'd', cData = null, cFilter = '', imp = null, addOpen = false, cErr = '';
+const normTxt = s => String(s == null ? '' : s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+/* Composition de l'hémicycle : un demi-cercle par parti, de gauche (FCP) à droite (ANF), puis les non-inscrits. */
+function compoHtml(D){
+  const N = D.length;
+  if (!N) return '<p class="muted" style="margin:0">Aucun député pour l’instant : l’hémicycle se remplira à mesure que vous créez les comptes.</p>';
+  const L = ORDRE.map(p => ({p, n: D.filter(d => d.parti === p).length})).filter(x => x.n);
+  const R = 100, r0 = 56, cx = 110, cy = 108, maj = Math.floor(N / 2) + 1;
+  const pt = (a, d) => (cx + d * Math.cos(a)).toFixed(2) + ' ' + (cy - d * Math.sin(a)).toFixed(2);
+  let a = Math.PI, g = '';
+  L.forEach(x => {
+    const b = Math.max(0, a - Math.PI * x.n / N);
+    g += `<path d="M${pt(a, R)} A${R} ${R} 0 0 1 ${pt(b, R)} L${pt(b, r0)} A${r0} ${r0} 0 0 0 ${pt(a, r0)}Z" fill="${PARTIS[x.p].c}" stroke="#ffffff" stroke-width="1.4" stroke-linejoin="round"><title>${x.p} : ${x.n}</title></path>`;
+    a = b;
+  });
+  g += `<line x1="${cx}" y1="${cy - r0 + 6}" x2="${cx}" y2="${cy - R - 6}" stroke="#1f3b6f" stroke-width="1.2" stroke-dasharray="3 3" opacity=".55"/>`;
+  g += `<text x="${cx}" y="${cy - 16}" text-anchor="middle" font-size="30" font-weight="700" fill="#1f3b6f">${N}</text><text x="${cx}" y="${cy - 2}" text-anchor="middle" font-size="10.5" font-weight="600" fill="#4a556d">député${N > 1 ? 's' : ''}</text>`;
+  return `<section class="card compo"><h3>Composition de l’hémicycle <small>en direct · majorité absolue : ${maj}</small></h3>
+    <div class="compo-in"><svg viewBox="0 0 220 116" role="img" aria-label="Composition : ${L.map(x => x.p + ' ' + x.n).join(', ')}">${g}</svg>
+    <ul class="compo-leg">${L.map(x => `<li>${chipP(x.p)}<span class="nm">${esc(PARTIS[x.p].nom)}</span><b>${x.n}</b><span class="pc">${Math.round(x.n / N * 100)} %</span></li>`).join('')}</ul></div></section>`;
+}
+/* Actualisation en direct de l'écran Comptes (changements faits par un autre compte Présidence). */
+setInterval(() => {
+  if (!acctOpen || document.hidden || busy) return;
+  const a = document.activeElement;
+  if ($('#acct .inl') || (a && $('#acct').contains(a) && /INPUT|SELECT|TEXTAREA/.test(a.tagName))) return;
+  loadCpt();
+}, 10000);
+function openCpt(){ acctOpen = true; $('#main').hidden = true; $('#acct').hidden = false; renderAcct(); loadCpt(); window.scrollTo(0, 0); }
+function closeCpt(){ acctOpen = false; imp = null; $('#acct').hidden = true; $('#main').hidden = false; }
+async function loadCpt(){
+  cErr = '';
+  try { cData = await run('listerComptes', jeton); }
+  catch (e) { cErr = errMsg(e); if (isSess(e)) { closeCpt(); setSession(''); toast(cErr); return; } }
+  renderAcct();
+}
+const partiOpts = sel => ORDRE.map(p => `<option value="${p}"${p === sel ? ' selected' : ''}>${p} — ${esc(PARTIS[p].nom)}</option>`).join('');
+function renderAcct(){
+  const el = $('#acct');
+  if (!isP()) { closeCpt(); return; }
+  keep(el, () => {
+    const D = cData ? cData.deputes : [], P = cData ? cData.presidence : [];
+    let h = `<div class="ac-top"><button type="button" class="btn" data-ac="back">← Retour aux scrutins</button><h2>Comptes</h2></div>
+      <div class="tabs" role="tablist"><button type="button" role="tab" data-tab="d" aria-selected="${cTab === 'd'}">Députés (${D.length})</button><button type="button" role="tab" data-tab="p" aria-selected="${cTab === 'p'}">Présidence (${P.length})</button></div>`;
+    if (!cData) { el.innerHTML = h + (cErr ? `<div class="card"><p class="err" style="margin:0 0 10px">Impossible de charger les comptes : ${esc(cErr)}</p><button type="button" class="btn" data-ac="reload">Réessayer</button></div>` : '<p class="load">Chargement des comptes…</p>'); return; }
+    if (cTab === 'd') {
+      // Composition de l'hémicycle (demi-cercle)
+      h += compoHtml(D);
+      h += `<div class="ac-tools"><label class="sr" for="acFind">Rechercher</label><input id="acFind" type="search" placeholder="Rechercher un député…" value="${esc(cFilter)}" autocomplete="off">
+        <button type="button" class="btn" data-ac="add">${addOpen ? 'Fermer' : '+ Ajouter un député'}</button><button type="button" class="btn primary" data-ac="imp">Importer un fichier Excel</button></div>`;
+      if (addOpen) h += `<section class="card ac-add"><h3>Nouveau député</h3><div class="ac-grid">
+          <div><label for="aId">Identifiant</label><input id="aId" type="text" autocapitalize="none" spellcheck="false" placeholder="prenom.nom" autocomplete="off"></div>
+          <div><label for="aNom">Nom affiché</label><input id="aNom" type="text" maxlength="60" placeholder="Prénom Nom" autocomplete="off"></div>
+          <div><label for="aParti">Parti</label><select id="aParti"><option value="">Choisir…</option>${partiOpts('')}</select></div>
+          <div><label for="aPw">Mot de passe (8 car. min.)</label><input id="aPw" type="password" autocomplete="new-password"></div>
+        </div><div class="row"><button type="button" class="btn primary" data-ac="create">Créer le compte</button></div></section>`;
+      if (imp) h += impHtml();
+      const f = normTxt(cFilter);
+      const vis = D.filter(d => !f || normTxt(d.nom + ' ' + d.id + ' ' + d.parti).includes(f));
+      h += ORDRE.map(p => {
+        const L = vis.filter(d => d.parti === p);
+        if (!L.length) return '';
+        return `<section class="card ac-grp" style="--pc:${PARTIS[p].c}"><h3>${chipP(p)}<span>${esc(PARTIS[p].nom)}</span><small>${plural(L.length, 'député')}</small></h3><div class="ac-list">${L.map(d => `
+          <div class="ac-row"><span class="id">${esc(d.nom || d.id)}<small>${esc(d.id)}</small></span>
+            <label class="sr" for="par-${esc(d.id)}">Parti de ${esc(d.nom || d.id)}</label><select id="par-${esc(d.id)}" data-chp="${esc(d.id)}">${partiOpts(d.parti)}</select>
+            <button type="button" class="lk" data-ren="${esc(d.id)}" data-cur="${esc(d.nom || '')}">Renommer</button><button type="button" class="lk" data-pw="${esc(d.id)}">Mot de passe</button><button type="button" class="lk del" data-del="${esc(d.id)}">Retirer</button></div>`).join('')}</div></section>`;
+      }).join('') || (D.length ? '<p class="muted">Aucun député ne correspond à la recherche.</p>' : '');
+    } else {
+      h += `<section class="card ac-grp"><h3><span>Comptes Présidence</span><small>${plural(P.length, 'compte')}</small></h3><div class="ac-list">${P.map(c => `
+        <div class="ac-row"><span class="id">${esc(c.id)}${c.moi ? '<small>vous</small>' : ''}</span>${c.permanent ? '<span class="tag">permanent</span>' : `<button type="button" class="lk" data-pw="${esc(c.id)}">Mot de passe</button>${c.moi ? '' : `<button type="button" class="lk del" data-del="${esc(c.id)}">Retirer</button>`}`}</div>`).join('')}</div></section>
+        <section class="card ac-add"><h3>Nouveau compte Présidence</h3><div class="ac-grid">
+          <div><label for="aId">Identifiant</label><input id="aId" type="text" autocapitalize="none" spellcheck="false" placeholder="prenom.nom" autocomplete="off"></div>
+          <div><label for="aPw">Mot de passe (8 car. min.)</label><input id="aPw" type="password" autocomplete="new-password"></div>
+        </div><div class="row"><button type="button" class="btn primary" data-ac="create">Créer le compte</button></div></section>`;
+    }
+    el.innerHTML = h;
+  });
+}
+
+/* ---- Import Excel ---- */
+function impHtml(){
+  let h = `<section class="card ac-imp"><h3>Importer des députés</h3>
+    <p class="muted">Fichier Excel (.xlsx, .xls), .ods ou .csv avec une ligne d’en-tête contenant au moins <b>Prénom</b>, <b>Nom</b> et <b>Date de naissance</b> (colonne <b>Parti</b> facultative).<br>Identifiant : <b>prenom.nom</b> · Mot de passe : date de naissance <b>JJMMAAAA</b>.</p>
+    <div class="ac-tools"><label class="btn" for="xlsFile">Choisir le fichier…</label><input id="xlsFile" type="file" accept=".xlsx,.xls,.ods,.csv" class="sr">
+      <label class="sl" for="impDef">Parti si absent <select id="impDef">${partiOpts(imp.def || 'NI')}</select></label>
+      <button type="button" class="btn" data-ac="impclose">Annuler</button></div>`;
+  if (imp.err) h += `<p class="err">${esc(imp.err)}</p>`;
+  if (imp.rows) {
+    const ok = imp.rows.filter(r => r.st === 'ok');
+    h += `<p class="ac-imp-sum"><b>${esc(imp.file)}</b> : ${plural(imp.rows.length, 'ligne')} · <span class="okc">${ok.length} à créer</span>${imp.rows.length - ok.length ? ` · <span class="koc">${imp.rows.length - ok.length} ignorée${imp.rows.length - ok.length > 1 ? 's' : ''}</span>` : ''}</p>
+      <div class="tw"><table class="imp-t"><thead><tr><th>Nom</th><th>Identifiant</th><th>Mot de passe</th><th>Parti</th><th>État</th></tr></thead><tbody>${imp.rows.map(r => `<tr class="${r.st}"><td>${esc(r.nom)}</td><td>${esc(r.id)}</td><td>${r.mdp ? esc(r.mdp) : '—'}</td><td>${chipP(r.parti || imp.def)}</td><td>${r.st === 'ok' ? 'À créer' : esc(r.why)}</td></tr>`).join('')}</tbody></table></div>
+      <div class="row"><button type="button" class="btn primary" data-ac="impgo"${ok.length ? '' : ' disabled'}>Créer ${plural(ok.length, 'compte')}</button></div>`;
+  }
+  return h + '</section>';
+}
+function loadXLSX(){
+  if (window.XLSX) return Promise.resolve();
+  return new Promise((ok, ko) => { const sc = document.createElement('script'); sc.src = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js'; sc.onload = ok; sc.onerror = () => ko(new Error('Impossible de charger le lecteur de fichiers Excel. Vérifiez la connexion.')); document.head.append(sc); });
+}
+const pad2 = n => String(n).padStart(2, '0');
+function ddn(v){
+  if (typeof v === 'number' && v > 1000 && v < 80000) { const d = new Date(Math.round((v - 25569) * 864e5)); return pad2(d.getUTCDate()) + pad2(d.getUTCMonth() + 1) + d.getUTCFullYear(); }
+  const s = String(v == null ? '' : v).trim();
+  let m = s.match(/^(\d{1,2})[\/.\- ](\d{1,2})[\/.\- ](\d{2,4})$/);
+  if (m) { let y = +m[3]; if (y < 100) y += y > 30 ? 1900 : 2000; if (+m[1] > 31 || +m[2] > 12) return ''; return pad2(m[1]) + pad2(m[2]) + y; }
+  m = s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/); if (m) return pad2(m[3]) + pad2(m[2]) + m[1];
+  m = s.match(/^(\d{2})(\d{2})(\d{4})$/); if (m) return s;
+  return '';
+}
+const slug = s => normTxt(s).replace(/['’]/g, '').replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-').replace(/^-|-$/g, '');
+function partiDe(v){
+  const t = normTxt(v); if (!t) return '';
+  for (const p of ORDRE) if (t === p.toLowerCase() || t === normTxt(PARTIS[p].nom)) return p;
+  if (/non.?inscrit/.test(t)) return 'NI';
+  return '';
+}
+async function lireFichier(file){
+  imp = Object.assign(imp || {}, {file: file.name, rows: null, err: ''});
+  renderAcct();
+  try {
+    await loadXLSX();
+    const wb = XLSX.read(new Uint8Array(await file.arrayBuffer()), {type: 'array', cellDates: false});
+    const ws = wb.Sheets[wb.SheetNames[0]];
+    const A = XLSX.utils.sheet_to_json(ws, {header: 1, raw: true, defval: ''});
+    let hi = -1, cP = -1, cN = -1, cD = -1, cG = -1;
+    for (let i = 0; i < Math.min(15, A.length) && hi < 0; i++) {
+      const H = A[i].map(normTxt);
+      const iP = H.findIndex(x => /^prenom|first ?name/.test(x)), iN = H.findIndex(x => /^nom( de famille| d.usage)?$|^last ?name|^surname/.test(x));
+      if (iP >= 0 && iN >= 0) { hi = i; cP = iP; cN = iN; cD = H.findIndex(x => /naiss|^ddn|birth|^date/.test(x)); cG = H.findIndex(x => /parti|groupe|party/.test(x)); }
+    }
+    if (hi < 0) throw new Error('Colonnes « Prénom » et « Nom » introuvables dans la première feuille.');
+    if (cD < 0) throw new Error('Colonne « Date de naissance » introuvable.');
+    const exist = new Set((cData ? cData.deputes : []).map(d => d.id)), vus = new Set(), rows = [];
+    for (const r of A.slice(hi + 1)) {
+      const pr = String(r[cP] || '').trim(), nm = String(r[cN] || '').trim();
+      if (!pr && !nm) continue;
+      let id = slug(pr) + '.' + slug(nm), why = '';
+      if (vus.has(id)) { let n = 2; while (vus.has(id + n)) n++; id = id + n; }
+      vus.add(id);
+      const mdp = ddn(r[cD]), parti = cG >= 0 ? partiDe(r[cG]) : '';
+      if (!pr || !nm) why = 'prénom ou nom manquant';
+      else if (!/^[a-z0-9._-]{3,40}$/.test(id)) why = 'identifiant invalide';
+      else if (!mdp) why = 'date de naissance illisible';
+      else if (exist.has(id)) why = 'existe déjà';
+      rows.push({nom: pr + ' ' + nm, id, mdp, parti, st: why ? 'ko' : 'ok', why});
+    }
+    if (!rows.length) throw new Error('Aucune ligne de député trouvée sous l’en-tête.');
+    imp.rows = rows;
+  } catch (e) { imp.err = errMsg(e); }
+  renderAcct();
+}
+async function importer(){
+  const ok = imp.rows.filter(r => r.st === 'ok');
+  const def = $('#impDef') ? $('#impDef').value : 'NI';
+  const r = await act('importerDeputes', ok.map(x => ({id: x.id, nom: x.nom, parti: x.parti || def, mdp: x.mdp})));
+  if (!r) return;
+  cData = r.comptes; imp = null;
+  toast(plural(r.crees, 'compte') + ' créé' + (r.crees > 1 ? 's' : '') + (r.ignores.length ? ' · ' + r.ignores.length + ' ignoré(s)' : ''));
+  renderAcct();
+}
+
+/* ---- Événements ---- */
+$('#acct').addEventListener('click', async e => {
+  const t = e.target;
+  const ac = t.closest('[data-ac]');
+  if (ac) {
+    const k = ac.dataset.ac;
+    if (k === 'back') closeCpt();
+    else if (k === 'reload') { cErr = ''; renderAcct(); loadCpt(); }
+    else if (k === 'add') { addOpen = !addOpen; renderAcct(); if (addOpen) setTimeout(() => { const i = $('#aId'); if (i) i.focus(); }, 20); }
+    else if (k === 'imp') { imp = imp || {def: 'NI'}; renderAcct(); }
+    else if (k === 'impclose') { imp = null; renderAcct(); }
+    else if (k === 'impgo') importer();
+    else if (k === 'create') {
+      const d = await act('ajouterCompte', cTab, $('#aId').value, $('#aNom') ? $('#aNom').value : '', $('#aPw').value, $('#aParti') ? $('#aParti').value : '');
+      if (d) { cData = d; toast('Compte créé : ' + $('#aId').value.trim().toLowerCase()); ['aId', 'aNom', 'aPw'].forEach(i => { const x = document.getElementById(i); if (x) x.value = ''; }); renderAcct(); const i = $('#aId'); if (i) i.focus(); }
+    }
+    return;
+  }
+  const tab = t.closest('[data-tab]'); if (tab) { cTab = tab.dataset.tab; renderAcct(); return; }
+  const inline = (btn, kind, ph, val, type) => {
+    const row = btn.closest('.ac-row'); const old = row.querySelector('.inl'); if (old) { old.remove(); return; }
+    const f = document.createElement('div'); f.className = 'inl';
+    f.innerHTML = `<input type="${type}" placeholder="${esc(ph)}" value="${esc(val || '')}" autocomplete="${type === 'password' ? 'new-password' : 'off'}" aria-label="${esc(ph)}"><button type="button" class="btn primary" data-ok="${kind}" data-id="${esc(btn.dataset.pw || btn.dataset.ren)}">OK</button>`;
+    row.append(f); f.querySelector('input').focus();
+  };
+  const pw = t.closest('[data-pw]'); if (pw) { inline(pw, 'pw', 'Nouveau mot de passe (8 min.)', '', 'password'); return; }
+  const ren = t.closest('[data-ren]'); if (ren) { inline(ren, 'ren', 'Nom affiché', ren.dataset.cur, 'text'); return; }
+  const ok = t.closest('[data-ok]');
+  if (ok) {
+    const v = ok.previousElementSibling.value; ok.disabled = true;
+    const d = ok.dataset.ok === 'pw' ? await act('changerMotDePasse', cTab, ok.dataset.id, v) : await act('renommerDepute', ok.dataset.id, v);
+    if (d) { cData = d; renderAcct(); toast(ok.dataset.ok === 'pw' ? 'Mot de passe de ' + ok.dataset.id + ' changé' : 'Nom modifié'); } else ok.disabled = false;
+    return;
+  }
+  const del = t.closest('[data-del]');
+  if (del) arm(del, 'Confirmer', async () => { const d = await act('supprimerCompte', cTab, del.dataset.del); if (d) { cData = d; renderAcct(); toast('Compte retiré'); } });
+});
+$('#acct').addEventListener('change', async e => {
+  const t = e.target;
+  if (t.id === 'xlsFile' && t.files && t.files[0]) { lireFichier(t.files[0]); t.value = ''; return; }
+  if (t.id === 'impDef' && imp) { imp.def = t.value; renderAcct(); return; }
+  if (t.dataset.chp) {
+    const d = await act('changerPartiDepute', t.dataset.chp, t.value);
+    if (d) { cData = d; toast('Parti modifié : ' + t.value); }
+    renderAcct();
+  }
+});
+$('#acct').addEventListener('input', e => { if (e.target.id === 'acFind') { cFilter = e.target.value; renderAcct(); } });
+$('#acct').addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  if (e.target.closest('.inl')) { e.preventDefault(); e.target.closest('.inl').querySelector('[data-ok]').click(); }
+  else if (e.target.closest('.ac-add')) { e.preventDefault(); $('[data-ac="create"]').click(); }
+});
+
+document.addEventListener('keydown', e => { if (e.key !== 'Escape') return; if (!$('#loginBox').hidden) closeLogin(); else if (!$('#meBox').hidden) closeMe(); else if (!$('#seanceBox').hidden) closeSeance(); else if (acctOpen) closeCpt(); });
+
+/* ---------- Démarrage ---------- */
+renderAuth();
+poll(true).then(schedule);
+})();
+</script>
+</body>
+</html>
